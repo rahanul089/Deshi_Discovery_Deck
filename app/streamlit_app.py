@@ -38,14 +38,12 @@ CSS = """
     --shadow-blue: 0 8px 32px rgba(46, 134, 193, 0.15);
 }
 
-/* Main container */
 .stApp {
     background: var(--bg-primary);
     color: var(--text-primary);
     font-family: 'Inter', sans-serif;
 }
 
-/* Background Image Overlay */
 .stApp::before {
     content: "";
     position: fixed;
@@ -69,7 +67,6 @@ CSS = """
     z-index: 1;
 }
 
-/* Sidebar */
 section[data-testid="stSidebar"] {
     background: rgba(8, 14, 20, 0.95) !important;
     backdrop-filter: blur(20px);
@@ -79,7 +76,6 @@ section[data-testid="stSidebar"] * {
     color: var(--text-primary) !important;
 }
 
-/* Hero */
 .hero-title {
     font-family: 'Playfair Display', serif;
     font-weight: 900;
@@ -98,7 +94,6 @@ section[data-testid="stSidebar"] * {
     letter-spacing: 0.05em;
 }
 
-/* Blue Divider */
 .blue-divider {
     border: none;
     height: 2px;
@@ -108,7 +103,6 @@ section[data-testid="stSidebar"] * {
     opacity: 0.6;
 }
 
-/* Cards */
 .dest-card {
     background: var(--bg-card);
     backdrop-filter: blur(12px);
@@ -154,7 +148,6 @@ section[data-testid="stSidebar"] * {
     font-weight: 300;
 }
 
-/* Vibe Score */
 .vibe-score {
     display: inline-flex;
     align-items: center;
@@ -172,7 +165,6 @@ section[data-testid="stSidebar"] * {
     box-shadow: 0 4px 20px rgba(46, 134, 193, 0.3);
 }
 
-/* Chips */
 .chip {
     display: inline-block;
     font-family: 'JetBrains Mono', monospace;
@@ -191,7 +183,6 @@ section[data-testid="stSidebar"] * {
     color: var(--cyan-light);
 }
 
-/* Buttons */
 .stButton > button {
     background: var(--blue-gradient) !important;
     color: white !important;
@@ -207,7 +198,6 @@ section[data-testid="stSidebar"] * {
     box-shadow: 0 8px 30px rgba(46, 134, 193, 0.3) !important;
 }
 
-/* Stats */
 .stat-box {
     background: var(--bg-card);
     backdrop-filter: blur(8px);
@@ -230,26 +220,10 @@ section[data-testid="stSidebar"] * {
     color: var(--text-primary);
 }
 
-/* Footer */
-.footer {
-    text-align: center;
-    padding: 2rem 0 1rem 0;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    border-top: 1px solid var(--border-blue);
-    margin-top: 2rem;
-    font-weight: 300;
-}
-.footer strong {
-    color: var(--blue-light);
-}
-
-/* Hide Streamlit branding */
 footer, #MainMenu, header {
     visibility: hidden;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.2rem;
@@ -264,7 +238,6 @@ footer, #MainMenu, header {
     }
 }
 
-/* Selectors */
 .stSelectbox > div > div {
     background: var(--bg-card) !important;
     border: 1px solid var(--border-blue) !important;
@@ -275,7 +248,6 @@ footer, #MainMenu, header {
     font-weight: 500 !important;
 }
 
-/* Slider */
 .stSlider > div > div {
     background: var(--border-blue) !important;
 }
@@ -283,7 +255,6 @@ footer, #MainMenu, header {
     background: var(--blue-primary) !important;
 }
 
-/* Success/Warning/Info */
 .stAlert {
     background: var(--bg-card) !important;
     backdrop-filter: blur(8px);
@@ -320,7 +291,7 @@ SEASON_EMOJI = {
 model, users_df, dests_df, ratings_df = load_model()
 
 # ---------------------------------------------------------------------------
-# SESSION STATE FOR FAVORITES & HISTORY
+# SESSION STATE
 # ---------------------------------------------------------------------------
 if "favorites" not in st.session_state:
     st.session_state.favorites = set()
@@ -354,22 +325,28 @@ with st.sidebar:
     category = st.selectbox("Category", ["Any"] + sorted(dests_df["category"].unique().tolist()))
     st.markdown("---")
     st.markdown("### ✦ Settings")
-    top_n = st.slider("Number of Recommendations", 3, 15, 6)
+    top_n = st.slider("Number of Recommendations", 3, 15, 7)
     sort_by = st.selectbox("Sort By", ["Vibe Score", "Alphabetical", "Budget (Low to High)", "Budget (High to Low)"])
     st.markdown("---")
     st.markdown("### ✦ Quick Stats")
     st.metric("Total Destinations", len(dests_df))
     st.metric("Your Ratings", len(ratings_df[ratings_df.user_id == user_id]))
-    st.markdown("---")
     
-    # NEW: Favorite Destinations Section
     if st.session_state.favorites:
+        st.markdown("---")
         st.markdown("### ⭐ Favorites")
         for fav in list(st.session_state.favorites)[:3]:
             fav_name = dests_df[dests_df.destination_id == fav]["name"].values[0] if fav in dests_df.destination_id.values else f"#{fav}"
             st.markdown(f"- {fav_name}")
-    
+
+# ---------------------------------------------------------------------------
+# DISCOVER BUTTON - MOVED TO TOP
+# ---------------------------------------------------------------------------
+col_btn1, col_btn2, col_btn3 = st.columns([1, 2, 1])
+with col_btn2:
     go = st.button("✨ Discover", type="primary", use_container_width=True)
+
+st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
 # USER PROFILE
@@ -409,7 +386,6 @@ if go:
     if recs.empty:
         st.warning("No destinations match your filters. Try adjusting your preferences.")
     else:
-        # Apply sorting
         if sort_by == "Alphabetical":
             recs = recs.sort_values("name")
         elif sort_by == "Budget (Low to High)":
@@ -422,7 +398,7 @@ if go:
             recs["budget_rank"] = recs["budget_level"].map(budget_order)
             recs = recs.sort_values("budget_rank", ascending=False)
             recs = recs.drop(columns=["budget_rank"])
-        else:  # Vibe Score (default)
+        else:
             recs = recs.sort_values("hybrid_score", ascending=False)
         
         recs = recs.head(top_n)
@@ -441,7 +417,6 @@ if go:
                 for j, t in enumerate(tags[:3])
             )
 
-            # Check if destination is favorited
             is_fav = row["destination_id"] in st.session_state.favorites
             fav_icon = "⭐" if is_fav else "☆"
 
@@ -457,7 +432,6 @@ if go:
             with cols[i % 2]:
                 st.markdown(card_html, unsafe_allow_html=True)
                 
-                # NEW: Action buttons
                 col_a, col_b, col_c = st.columns(3)
                 with col_a:
                     if st.button(f"{fav_icon} Favorite", key=f"fav_{row['destination_id']}"):
@@ -478,7 +452,6 @@ if go:
                             st.markdown(f"**Avg Cost:** {row['avg_cost_bdt_per_day']} BDT/day")
                             st.markdown(f"**Instagrammability:** {'⭐' * int(row['instagrammability'])}")
                 
-                # Record in history
                 if row["destination_id"] not in st.session_state.history:
                     st.session_state.history.append(row["destination_id"])
 
@@ -488,7 +461,7 @@ else:
     )
 
 # ---------------------------------------------------------------------------
-# NEW: EXPLORE RANDOM DESTINATION
+# FEELING LUCKY
 # ---------------------------------------------------------------------------
 st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
 col_r1, col_r2 = st.columns([3, 1])
@@ -501,7 +474,7 @@ with col_r2:
         st.markdown(f"> {random_dest['description']}")
 
 # ---------------------------------------------------------------------------
-# NEW: RECENTLY VIEWED
+# RECENTLY VIEWED
 # ---------------------------------------------------------------------------
 if st.session_state.history:
     st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
@@ -513,17 +486,3 @@ if st.session_state.history:
             with recent_cols[idx % len(recent_cols)]:
                 st.markdown(f"**{dest_row['name']}**")
                 st.caption(f"{dest_row['division']} · {dest_row['budget_level']}")
-
-# ---------------------------------------------------------------------------
-# FOOTER
-# ---------------------------------------------------------------------------
-st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
-st.markdown(
-    f"""
-    <div class="footer">
-        <strong>Deshi Discovery Deck</strong> — Powered by SVD + TF-IDF Hybrid Recommender<br>
-        40 real Bangladesh destinations · 120 Gen Z personas · 3,000 ratings
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
