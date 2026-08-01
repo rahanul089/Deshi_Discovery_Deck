@@ -323,7 +323,7 @@ This project is licensed under the MIT License.
 ## 📬 Contact
 
 **Maintainer**: Rahanul  
-**GitHub**: [@rahanu1089](https://github.com/rahanu1089)  
+**GitHub**: [@rahanu1089](https://github.com/rahanul089)  
 **Project Link**: [https://github.com/rahanu1089/Deshi_Discovery_Deck](https://github.com/rahanu1089/Deshi_Discovery_Deck)
 
 ---
