@@ -1,0 +1,121 @@
+user_id,name,age,home_city,persona,preferred_categories,preferred_budget
+0,Rakib,20,Rangpur,Beach Baddie,beach|island,low
+1,Sabbir,26,Chattogram,Chai & Chill,tea-garden,high
+2,Rafi,26,Rajshahi,Beach Baddie,beach|island,low
+3,Anika,24,Chattogram,Jungle Junkie,forest|wetland,low
+4,Lamia,24,Dhaka,Cloud Chaser,hill,low
+5,Nafis,27,Dhaka,Street Food Explorer,urban,low
+6,Adnan,18,Sylhet,Waterfall Hunter,waterfall,medium
+7,Farhan,26,Chattogram,Waterfall Hunter,waterfall,high
+8,Sabbir,20,Chattogram,Jungle Junkie,forest|wetland,medium
+9,Tanvir,26,Chattogram,Beach Baddie,beach|island,high
+10,Sadia,25,Rangpur,Chai & Chill,tea-garden,medium
+11,Fahim,25,Barishal,Waterfall Hunter,waterfall,low
+12,Tania,20,Rajshahi,Cloud Chaser,hill,high
+13,Tasnim,26,Mymensingh,Chai & Chill,tea-garden,high
+14,Imran,22,Chattogram,Cloud Chaser,hill,high
+15,Anika,20,Barishal,Heritage Nerd,heritage,medium
+16,Anika,18,Chattogram,Chai & Chill,tea-garden,medium
+17,Shafin,23,Mymensingh,Off-Grid Wanderer,island|wetland,low
+18,Sabbir,19,Khulna,Off-Grid Wanderer,island|wetland,high
+19,Rida,19,Dhaka,Waterfall Hunter,waterfall,high
+20,Fahim,25,Khulna,Street Food Explorer,urban,high
+21,Nabila,18,Mymensingh,Chai & Chill,tea-garden,low
+22,Orin,19,Mymensingh,Beach Baddie,beach|island,low
+23,Arnob,22,Sylhet,Jungle Junkie,forest|wetland,medium
+24,Shuvo,25,Chattogram,Heritage Nerd,heritage,medium
+25,Shuvo,26,Khulna,Heritage Nerd,heritage,medium
+26,Mahi,26,Khulna,Street Food Explorer,urban,medium
+27,Rida,24,Rajshahi,Heritage Nerd,heritage,low
+28,Mim,20,Rajshahi,Jungle Junkie,forest|wetland,low
+29,Proma,27,Sylhet,Waterfall Hunter,waterfall,medium
+30,Ayesha,20,Rangpur,Chai & Chill,tea-garden,high
+31,Fahim,23,Sylhet,Beach Baddie,beach|island,medium
+32,Rezwan,26,Rangpur,Street Food Explorer,urban,medium
+33,Shuvo,19,Mymensingh,Street Food Explorer,urban,low
+34,Sadia,19,Rajshahi,Off-Grid Wanderer,island|wetland,low
+35,Tanvir,23,Dhaka,Cloud Chaser,hill,low
+36,Fahim,20,Chattogram,Chai & Chill,tea-garden,high
+37,Ayesha,19,Rajshahi,Street Food Explorer,urban,low
+38,Nafis,22,Barishal,Chai & Chill,tea-garden,medium
+39,Tanvir,19,Mymensingh,Off-Grid Wanderer,island|wetland,medium
+40,Proma,22,Chattogram,Heritage Nerd,heritage,low
+41,Meherin,23,Khulna,Off-Grid Wanderer,island|wetland,high
+42,Mim,26,Dhaka,Jungle Junkie,forest|wetland,high
+43,Nabila,20,Dhaka,Waterfall Hunter,waterfall,high
+44,Mahi,19,Khulna,Chai & Chill,tea-garden,low
+45,Nabila,21,Barishal,Jungle Junkie,forest|wetland,high
+46,Tania,21,Rajshahi,Street Food Explorer,urban,high
+47,Tania,21,Rajshahi,Off-Grid Wanderer,island|wetland,medium
+48,Meherin,18,Dhaka,Waterfall Hunter,waterfall,medium
+49,Priyo,21,Barishal,Off-Grid Wanderer,island|wetland,high
+50,Nabila,23,Chattogram,Jungle Junkie,forest|wetland,low
+51,Adnan,25,Rajshahi,Chai & Chill,tea-garden,low
+52,Proma,27,Dhaka,Off-Grid Wanderer,island|wetland,high
+53,Nabila,19,Chattogram,Street Food Explorer,urban,high
+54,Arnob,21,Mymensingh,Heritage Nerd,heritage,medium
+55,Tania,23,Chattogram,Street Food Explorer,urban,medium
+56,Shuvo,19,Sylhet,Heritage Nerd,heritage,low
+57,Ayesha,20,Mymensingh,Heritage Nerd,heritage,high
+58,Sabbir,27,Mymensingh,Chai & Chill,tea-garden,low
+59,Lamia,26,Sylhet,Beach Baddie,beach|island,low
+60,Tania,19,Sylhet,Street Food Explorer,urban,low
+61,Sabbir,21,Dhaka,Waterfall Hunter,waterfall,low
+62,Tasnim,26,Rajshahi,Chai & Chill,tea-garden,medium
+63,Lamia,24,Sylhet,Beach Baddie,beach|island,high
+64,Nabila,25,Rangpur,Heritage Nerd,heritage,high
+65,Farhan,26,Dhaka,Off-Grid Wanderer,island|wetland,low
+66,Orin,18,Sylhet,Heritage Nerd,heritage,low
+67,Proma,27,Chattogram,Beach Baddie,beach|island,medium
+68,Rida,26,Mymensingh,Cloud Chaser,hill,high
+69,Rafi,21,Rajshahi,Waterfall Hunter,waterfall,low
+70,Arnob,19,Mymensingh,Beach Baddie,beach|island,low
+71,Imran,23,Rajshahi,Waterfall Hunter,waterfall,medium
+72,Zayan,26,Mymensingh,Jungle Junkie,forest|wetland,high
+73,Zayan,22,Rajshahi,Off-Grid Wanderer,island|wetland,low
+74,Anika,19,Rangpur,Off-Grid Wanderer,island|wetland,medium
+75,Nusrat,21,Rangpur,Cloud Chaser,hill,low
+76,Rida,22,Chattogram,Heritage Nerd,heritage,high
+77,Nafis,23,Sylhet,Waterfall Hunter,waterfall,low
+78,Imran,21,Chattogram,Street Food Explorer,urban,medium
+79,Mim,21,Sylhet,Street Food Explorer,urban,high
+80,Shuvo,23,Rangpur,Jungle Junkie,forest|wetland,medium
+81,Rakib,19,Barishal,Beach Baddie,beach|island,medium
+82,Lamia,25,Mymensingh,Beach Baddie,beach|island,medium
+83,Rakib,26,Khulna,Cloud Chaser,hill,low
+84,Ishika,21,Chattogram,Cloud Chaser,hill,medium
+85,Priyo,18,Sylhet,Waterfall Hunter,waterfall,low
+86,Sabbir,24,Khulna,Street Food Explorer,urban,low
+87,Lamia,26,Mymensingh,Chai & Chill,tea-garden,low
+88,Priyo,18,Sylhet,Street Food Explorer,urban,low
+89,Priyo,18,Chattogram,Waterfall Hunter,waterfall,low
+90,Orin,21,Chattogram,Waterfall Hunter,waterfall,low
+91,Imran,18,Barishal,Street Food Explorer,urban,medium
+92,Orin,20,Dhaka,Jungle Junkie,forest|wetland,low
+93,Mim,22,Dhaka,Heritage Nerd,heritage,low
+94,Ishika,22,Khulna,Jungle Junkie,forest|wetland,medium
+95,Imran,26,Sylhet,Waterfall Hunter,waterfall,medium
+96,Tania,18,Khulna,Beach Baddie,beach|island,low
+97,Ayesha,26,Rajshahi,Off-Grid Wanderer,island|wetland,low
+98,Ishika,25,Chattogram,Street Food Explorer,urban,high
+99,Proma,26,Rangpur,Waterfall Hunter,waterfall,high
+100,Sadia,21,Barishal,Jungle Junkie,forest|wetland,high
+101,Meherin,20,Rangpur,Chai & Chill,tea-garden,low
+102,Sabbir,20,Dhaka,Cloud Chaser,hill,high
+103,Meherin,22,Rangpur,Heritage Nerd,heritage,low
+104,Nusrat,24,Khulna,Jungle Junkie,forest|wetland,high
+105,Tasnim,18,Mymensingh,Heritage Nerd,heritage,low
+106,Priyo,25,Dhaka,Waterfall Hunter,waterfall,medium
+107,Rakib,26,Barishal,Jungle Junkie,forest|wetland,low
+108,Rezwan,22,Rajshahi,Chai & Chill,tea-garden,low
+109,Ayesha,23,Rangpur,Cloud Chaser,hill,medium
+110,Priyo,26,Rajshahi,Jungle Junkie,forest|wetland,high
+111,Arnob,18,Chattogram,Waterfall Hunter,waterfall,low
+112,Farhan,24,Dhaka,Street Food Explorer,urban,low
+113,Tasnim,22,Rajshahi,Cloud Chaser,hill,high
+114,Zayan,20,Rangpur,Chai & Chill,tea-garden,high
+115,Proma,20,Khulna,Heritage Nerd,heritage,low
+116,Sabbir,26,Rangpur,Heritage Nerd,heritage,high
+117,Arnob,26,Dhaka,Jungle Junkie,forest|wetland,low
+118,Ayesha,18,Sylhet,Chai & Chill,tea-garden,low
+119,Shuvo,25,Dhaka,Beach Baddie,beach|island,high
