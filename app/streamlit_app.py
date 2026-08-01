@@ -14,93 +14,119 @@ from recommender import HybridRecommender
 st.set_page_config(page_title="Deshi Discovery Deck 🇧🇩", page_icon="🛺", layout="wide")
 
 # ---------------------------------------------------------------------------
-# PROFESSIONAL DESIGN SYSTEM
+# AESTHETIC DESIGN SYSTEM
 # ---------------------------------------------------------------------------
 CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-    --primary: #1A3C34;
-    --secondary: #E4232B;
-    --accent: #FFC900;
-    --success: #1C7A4D;
-    --background: #0F1A16;
-    --surface: #1A2F26;
-    --text: #FFFFFF;
-    --text-secondary: #B8D4C8;
-    --border: #2A4A3A;
+    --bg-primary: #0A0F0D;
+    --bg-secondary: #141E18;
+    --bg-card: rgba(20, 30, 24, 0.85);
+    --gold: #D4A847;
+    --gold-light: #F0D080;
+    --gold-gradient: linear-gradient(135deg, #D4A847, #F0D080, #D4A847);
+    --teal: #2A9D8F;
+    --teal-light: #5ECFB8;
+    --rose: #E76F51;
+    --rose-light: #F4A08A;
+    --text-primary: #F5F0E8;
+    --text-secondary: #C5BFA8;
+    --text-muted: #8A8470;
+    --border-gold: rgba(212, 168, 71, 0.3);
+    --shadow-gold: 0 8px 32px rgba(212, 168, 71, 0.1);
 }
 
 /* Main container */
 .stApp {
-    background: var(--background);
-    color: var(--text);
+    background: var(--bg-primary);
+    color: var(--text-primary);
     font-family: 'Inter', sans-serif;
+}
+
+/* Background Image Overlay */
+.stApp::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        url('https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?w=1600&q=80'),
+        url('https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?w=1600&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    opacity: 0.08;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Content overlay */
+.stApp > div {
+    position: relative;
+    z-index: 1;
 }
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background: var(--surface);
-    border-right: 2px solid var(--accent);
-    padding-top: 2rem;
+    background: rgba(10, 15, 13, 0.92) !important;
+    backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border-gold);
 }
 section[data-testid="stSidebar"] * {
-    color: var(--text) !important;
-}
-section[data-testid="stSidebar"] .stSelectbox label,
-section[data-testid="stSidebar"] .stSlider label {
-    color: var(--text-secondary) !important;
-    font-weight: 500;
+    color: var(--text-primary) !important;
 }
 
-/* Headers */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 700 !important;
-}
-
-/* Hero Title */
+/* Hero Section */
 .hero-title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 3rem;
-    color: var(--text);
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 3.5rem;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 0.2rem;
-}
-.hero-title span {
-    color: var(--accent);
+    text-shadow: none;
 }
 .hero-sub {
+    font-family: 'Inter', sans-serif;
     font-size: 1.1rem;
     color: var(--text-secondary);
-    font-weight: 400;
+    font-weight: 300;
+    letter-spacing: 0.05em;
     margin-bottom: 0.5rem;
 }
 
-/* Divider Lines */
-.professional-divider {
+/* Gold Divider */
+.gold-divider {
     border: none;
     height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--secondary), var(--success));
+    background: var(--gold-gradient);
     margin: 1.5rem 0;
     border-radius: 2px;
+    opacity: 0.6;
 }
 
 /* Destination Cards */
 .dest-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-gold);
+    border-radius: 20px;
     padding: 1.5rem;
-    margin-bottom: 1rem;
-    transition: all 0.3s ease;
+    margin-bottom: 1.2rem;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
+    overflow: hidden;
 }
 .dest-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: var(--shadow-gold);
 }
 .dest-card::before {
     content: "";
@@ -108,117 +134,126 @@ h1, h2, h3, h4, h5, h6 {
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--secondary), var(--accent), var(--success));
-    border-radius: 16px 16px 0 0;
+    height: 3px;
+    background: var(--gold-gradient);
 }
 .dest-name {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-weight: 700;
-    font-size: 1.4rem;
-    color: var(--text);
+    font-size: 1.5rem;
+    color: var(--text-primary);
     margin-bottom: 0.2rem;
 }
 .dest-meta {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    letter-spacing: 0.02em;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
     margin-bottom: 0.6rem;
+    text-transform: uppercase;
 }
 .dest-desc {
     font-size: 0.9rem;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.7;
+    font-weight: 300;
 }
 
-/* Vibe Score Badge */
+/* Vibe Score */
 .vibe-score {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--accent);
-    color: var(--primary);
-    font-family: 'Inter', sans-serif;
+    background: var(--gold-gradient);
+    color: var(--bg-primary);
+    font-family: 'Playfair Display', serif;
     font-weight: 800;
     border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    font-size: 1.1rem;
+    width: 60px;
+    height: 60px;
+    font-size: 1.2rem;
     float: right;
-    border: 3px solid var(--primary);
+    border: 2px solid var(--gold);
+    box-shadow: 0 4px 20px rgba(212, 168, 71, 0.3);
 }
 
 /* Chips / Tags */
 .chip {
     display: inline-block;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.7rem;
-    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    padding: 4px 14px;
     border-radius: 999px;
     margin: 2px 4px 2px 0;
-    background: rgba(124, 255, 178, 0.1);
-    border: 1px solid var(--success);
-    color: var(--success);
+    background: rgba(212, 168, 71, 0.08);
+    border: 1px solid rgba(212, 168, 71, 0.2);
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
 }
-.chip-red {
-    background: rgba(228, 35, 43, 0.15);
-    border-color: var(--secondary);
-    color: #FF6B6B;
+.chip-teal {
+    background: rgba(42, 157, 143, 0.15);
+    border-color: rgba(42, 157, 143, 0.3);
+    color: var(--teal-light);
 }
-.chip-yellow {
-    background: rgba(255, 201, 0, 0.15);
-    border-color: var(--accent);
-    color: var(--accent);
+.chip-rose {
+    background: rgba(231, 111, 81, 0.15);
+    border-color: rgba(231, 111, 81, 0.3);
+    color: var(--rose-light);
 }
 
 /* Buttons */
 .stButton > button {
-    background: var(--secondary) !important;
-    color: var(--text) !important;
+    background: var(--gold-gradient) !important;
+    color: var(--bg-primary) !important;
     font-family: 'Inter', sans-serif !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     border-radius: 12px !important;
     border: none !important;
-    padding: 0.7rem 1.5rem !important;
+    padding: 0.7rem 2rem !important;
     transition: all 0.3s ease !important;
+    letter-spacing: 0.04em;
 }
 .stButton > button:hover {
-    background: #C41E24 !important;
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(228, 35, 43, 0.4);
+    box-shadow: 0 8px 30px rgba(212, 168, 71, 0.3) !important;
 }
 
 /* Profile Stats */
 .stat-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    background: var(--bg-card);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-gold);
+    border-radius: 14px;
     padding: 0.8rem 1rem;
     text-align: center;
 }
 .stat-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.7rem;
-    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
 }
 .stat-value {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--text);
+    font-size: 1.15rem;
+    color: var(--text-primary);
 }
 
 /* Footer */
 .footer {
     text-align: center;
     padding: 2rem 0 1rem 0;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border-gold);
     margin-top: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+}
+.footer strong {
+    color: var(--gold);
 }
 
 /* Hide Streamlit branding */
@@ -229,11 +264,35 @@ footer, #MainMenu, header {
 /* Responsive */
 @media (max-width: 768px) {
     .hero-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
     .dest-card {
-        padding: 1rem;
+        padding: 1.2rem;
     }
+    .vibe-score {
+        width: 48px;
+        height: 48px;
+        font-size: 1rem;
+    }
+}
+
+/* Dropdowns and Selectors */
+.stSelectbox > div > div {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-gold) !important;
+    border-radius: 10px !important;
+}
+.stSelectbox label {
+    color: var(--text-secondary) !important;
+    font-weight: 500 !important;
+}
+
+/* Slider */
+.stSlider > div > div {
+    background: var(--border-gold) !important;
+}
+.stSlider > div > div > div {
+    background: var(--gold) !important;
 }
 </style>
 """
@@ -261,32 +320,32 @@ model, users_df, dests_df, ratings_df = load_model()
 # HERO SECTION
 # ---------------------------------------------------------------------------
 st.markdown(
-    '<div class="hero-title">Deshi Discovery <span>Deck</span> 🛺</div>'
-    '<div class="hero-sub">Discover your next Bangladeshi adventure with AI-powered recommendations</div>',
+    '<div class="hero-title">Deshi Discovery Deck</div>'
+    '<div class="hero-sub">AI-powered travel recommendations for Bangladesh</div>',
     unsafe_allow_html=True,
 )
-st.markdown('<hr class="professional-divider">', unsafe_allow_html=True)
+st.markdown('<hr class="gold-divider">', unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
 # SIDEBAR
 # ---------------------------------------------------------------------------
 with st.sidebar:
-    st.markdown("### 🎯 Your Profile")
+    st.markdown("### ✦ Your Profile")
     user_id = st.selectbox(
-        "Select User",
+        "Select Traveler",
         sorted(users_df["user_id"].tolist()),
         format_func=lambda uid: f"{users_df[users_df.user_id == uid]['name'].values[0]} · #{uid}"
     )
     st.markdown("---")
-    st.markdown("### 🔍 Filter Destinations")
+    st.markdown("### ✦ Filter Destinations")
     division = st.selectbox("Division", ["Any"] + sorted(dests_df["division"].unique().tolist()))
     budget = st.selectbox("Budget Level", ["Any", "low", "medium", "high"])
     category = st.selectbox("Category", ["Any"] + sorted(dests_df["category"].unique().tolist()))
     st.markdown("---")
-    st.markdown("### ⚙️ Settings")
+    st.markdown("### ✦ Settings")
     top_n = st.slider("Number of Recommendations", 3, 15, 6)
     st.markdown("---")
-    go = st.button("🚀 Get Recommendations", type="primary", use_container_width=True)
+    go = st.button("✨ Discover", type="primary", use_container_width=True)
 
 # ---------------------------------------------------------------------------
 # USER PROFILE
@@ -304,7 +363,7 @@ for col, label, val in zip(
         unsafe_allow_html=True,
     )
 
-st.markdown('<hr class="professional-divider">', unsafe_allow_html=True)
+st.markdown('<hr class="gold-divider">', unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
 # RECOMMENDATIONS
@@ -314,7 +373,7 @@ if go:
     budget_arg = None if budget == "Any" else budget
     category_arg = None if category == "Any" else category
 
-    with st.spinner("Finding the best destinations for you..."):
+    with st.spinner("Curating your perfect itinerary..."):
         recs = model.recommend(
             user_id,
             top_n=top_n,
@@ -326,15 +385,15 @@ if go:
     if recs.empty:
         st.warning("No destinations match your filters. Try adjusting your preferences.")
     else:
-        st.markdown(f"### 🎯 Top {len(recs)} Recommendations for You")
-        st.markdown("---")
+        st.markdown(f"### ✦ Top {len(recs)} Recommendations")
+        st.markdown('<hr class="gold-divider">', unsafe_allow_html=True)
 
         cols = st.columns(2)
         for i, (_, row) in enumerate(recs.iterrows()):
             emoji = CATEGORY_EMOJI.get(row["category"], "📍")
             tags = row["vibe_tags"].split("|")
             chips_html = "".join(
-                f'<span class="chip{" chip-red" if j==0 else (" chip-yellow" if j==1 else "")}">#{t}</span>'
+                f'<span class="chip{" chip-teal" if j==0 else (" chip-rose" if j==1 else "")}">#{t}</span>'
                 for j, t in enumerate(tags[:3])
             )
 
@@ -349,25 +408,21 @@ if go:
             """
             with cols[i % 2]:
                 st.markdown(card_html, unsafe_allow_html=True)
-                if st.checkbox(f"💡 Why this recommendation?", key=f"why_{row['destination_id']}"):
-                    with st.expander("📖 Explanation", expanded=True):
-                        for reason in model.explain(user_id, row["destination_id"]):
-                            st.markdown(f"• {reason}")
 
 else:
     st.info(
-        "👈 Set your preferences in the sidebar and click **Get Recommendations** to discover your next adventure in Bangladesh."
+        "👈 Set your preferences in the sidebar and click **Discover** to find your next adventure in Bangladesh."
     )
 
 # ---------------------------------------------------------------------------
 # FOOTER
 # ---------------------------------------------------------------------------
-st.markdown('<hr class="professional-divider">', unsafe_allow_html=True)
+st.markdown('<hr class="gold-divider">', unsafe_allow_html=True)
 st.markdown(
     """
     <div class="footer">
-        🇧🇩 <strong>Deshi Discovery Deck</strong> — Powered by SVD + TF-IDF Hybrid Recommender<br>
-        Data: 40 real Bangladesh destinations · 120 synthetic Gen Z user personas · 3,000 ratings
+        <strong>Deshi Discovery Deck</strong> — Powered by SVD + TF-IDF Hybrid Recommender<br>
+        40 real Bangladesh destinations · 120 Gen Z personas · 3,000 ratings
     </div>
     """,
     unsafe_allow_html=True,
