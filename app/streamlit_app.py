@@ -299,17 +299,7 @@ if "history" not in st.session_state:
     st.session_state.history = []
 
 # ---------------------------------------------------------------------------
-# HERO SECTION
-# ---------------------------------------------------------------------------
-st.markdown(
-    '<div class="hero-title">Deshi Discovery Deck</div>'
-    '<div class="hero-sub">AI-powered travel recommendations for Bangladesh</div>',
-    unsafe_allow_html=True,
-)
-st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
-
-# ---------------------------------------------------------------------------
-# SIDEBAR
+# SIDEBAR - MOVED TO THE TOP FOR PROPER RENDERING
 # ---------------------------------------------------------------------------
 with st.sidebar:
     st.markdown("### ✦ Your Profile")
@@ -340,7 +330,17 @@ with st.sidebar:
             st.markdown(f"- {fav_name}")
 
 # ---------------------------------------------------------------------------
-# DISCOVER BUTTON - MOVED TO TOP
+# HERO SECTION
+# ---------------------------------------------------------------------------
+st.markdown(
+    '<div class="hero-title">Deshi Discovery Deck</div>'
+    '<div class="hero-sub">AI-powered travel recommendations for Bangladesh</div>',
+    unsafe_allow_html=True,
+)
+st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
+
+# ---------------------------------------------------------------------------
+# DISCOVER BUTTON
 # ---------------------------------------------------------------------------
 col_btn1, col_btn2, col_btn3 = st.columns([1, 2, 1])
 with col_btn2:
