@@ -15,32 +15,26 @@ from recommender import HybridRecommender
 st.set_page_config(page_title="Deshi Discovery Deck 🇧🇩", page_icon="🛺", layout="wide")
 
 # ---------------------------------------------------------------------------
-# BLUE THEME DESIGN SYSTEM
+# COOL MINIMALIST THEME
 # ---------------------------------------------------------------------------
 CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --bg-primary: #080E14;
-    --bg-secondary: #0F1A24;
-    --bg-card: rgba(15, 26, 36, 0.88);
-    --blue-deep: #1A5276;
-    --blue-primary: #2E86C1;
-    --blue-light: #5DADE2;
-    --blue-gradient: linear-gradient(135deg, #1A5276, #2E86C1, #5DADE2);
-    --cyan: #48C9B0;
-    --cyan-light: #76D7C4;
-    --text-primary: #F0F4F8;
-    --text-secondary: #B0C4DE;
-    --text-muted: #7F8FA6;
-    --border-blue: rgba(46, 134, 193, 0.3);
-    --shadow-blue: 0 8px 32px rgba(46, 134, 193, 0.15);
+    --bg: #0a0a0f;
+    --bg-card: rgba(20, 20, 30, 0.85);
+    --primary: #00d4ff;
+    --primary-dark: #0099cc;
+    --gradient: linear-gradient(135deg, #00d4ff, #7b2ffc);
+    --text: #ffffff;
+    --text-secondary: #8899aa;
+    --border: rgba(0, 212, 255, 0.15);
 }
 
 .stApp {
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    background: var(--bg);
+    color: var(--text);
     font-family: 'Inter', sans-serif;
 }
 
@@ -51,13 +45,8 @@ CSS = """
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80'),
-        url('https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?w=1600&q=80');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    opacity: 0.06;
+    background: radial-gradient(ellipse at 20% 50%, rgba(0, 212, 255, 0.03) 0%, transparent 70%),
+                radial-gradient(ellipse at 80% 20%, rgba(123, 47, 252, 0.03) 0%, transparent 70%);
     z-index: 0;
     pointer-events: none;
 }
@@ -68,198 +57,149 @@ CSS = """
 }
 
 section[data-testid="stSidebar"] {
-    background: rgba(8, 14, 20, 0.95) !important;
-    backdrop-filter: blur(20px);
-    border-right: 1px solid var(--border-blue);
+    background: rgba(10, 10, 15, 0.98) !important;
+    border-right: 1px solid var(--border) !important;
 }
 section[data-testid="stSidebar"] * {
-    color: var(--text-primary) !important;
+    color: var(--text) !important;
 }
 
 .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-weight: 900;
-    font-size: 3.5rem;
-    background: var(--blue-gradient);
+    font-weight: 700;
+    font-size: 3rem;
+    background: var(--gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin-bottom: 0.2rem;
 }
 .hero-sub {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
     color: var(--text-secondary);
     font-weight: 300;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
 }
 
-.blue-divider {
+.divider {
     border: none;
-    height: 2px;
-    background: var(--blue-gradient);
+    height: 1px;
+    background: var(--gradient);
     margin: 1.5rem 0;
-    border-radius: 2px;
-    opacity: 0.6;
+    opacity: 0.3;
 }
 
 .dest-card {
     background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-blue);
-    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
     padding: 1.5rem;
-    margin-bottom: 1.2rem;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
 }
 .dest-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--blue-primary);
-    box-shadow: var(--shadow-blue);
-}
-.dest-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--blue-gradient);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 212, 255, 0.05);
 }
 .dest-name {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    font-size: 1.4rem;
-    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--text);
 }
 .dest-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--blue-light);
-    letter-spacing: 0.06em;
+    font-size: 0.75rem;
+    color: var(--primary);
+    letter-spacing: 0.05em;
     text-transform: uppercase;
 }
 .dest-desc {
     font-size: 0.9rem;
     color: var(--text-secondary);
-    line-height: 1.7;
-    font-weight: 300;
+    line-height: 1.6;
 }
 
 .vibe-score {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--blue-gradient);
+    background: var(--gradient);
     color: white;
-    font-family: 'Playfair Display', serif;
-    font-weight: 800;
+    font-weight: 700;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    font-size: 1.2rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.1rem;
     float: right;
-    border: 2px solid var(--blue-primary);
-    box-shadow: 0 4px 20px rgba(46, 134, 193, 0.3);
 }
 
 .chip {
     display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    padding: 4px 14px;
-    border-radius: 999px;
+    font-size: 0.65rem;
+    padding: 3px 12px;
+    border-radius: 20px;
     margin: 2px 4px 2px 0;
-    background: rgba(46, 134, 193, 0.1);
-    border: 1px solid rgba(46, 134, 193, 0.2);
-    color: var(--blue-light);
-    letter-spacing: 0.04em;
-}
-.chip-cyan {
-    background: rgba(72, 201, 176, 0.12);
-    border-color: rgba(72, 201, 176, 0.25);
-    color: var(--cyan-light);
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    color: var(--primary);
 }
 
 .stButton > button {
-    background: var(--blue-gradient) !important;
+    background: var(--gradient) !important;
     color: white !important;
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 700 !important;
-    border-radius: 12px !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
     border: none !important;
-    padding: 0.7rem 2rem !important;
+    padding: 0.6rem 1.5rem !important;
     transition: all 0.3s ease !important;
 }
 .stButton > button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(46, 134, 193, 0.3) !important;
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2) !important;
 }
 
 .stat-box {
     background: var(--bg-card);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--border-blue);
-    border-radius: 14px;
-    padding: 0.8rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.8rem;
     text-align: center;
 }
 .stat-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--blue-light);
+    font-size: 0.65rem;
+    color: var(--primary);
     text-transform: uppercase;
     letter-spacing: 0.08em;
 }
 .stat-value {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1.1rem;
-    color: var(--text-primary);
+    color: var(--text);
 }
 
 footer, #MainMenu, header {
-    visibility: hidden;
-}
-
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.2rem;
-    }
-    .dest-card {
-        padding: 1.2rem;
-    }
-    .vibe-score {
-        width: 48px;
-        height: 48px;
-        font-size: 1rem;
-    }
+    display: none !important;
 }
 
 .stSelectbox > div > div {
     background: var(--bg-card) !important;
-    border: 1px solid var(--border-blue) !important;
-    border-radius: 10px !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
 }
 .stSelectbox label {
     color: var(--text-secondary) !important;
-    font-weight: 500 !important;
 }
 
 .stSlider > div > div {
-    background: var(--border-blue) !important;
+    background: var(--border) !important;
 }
 .stSlider > div > div > div {
-    background: var(--blue-primary) !important;
+    background: var(--primary) !important;
 }
 
 .stAlert {
     background: var(--bg-card) !important;
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--border-blue) !important;
-    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text) !important;
 }
 </style>
 """
@@ -299,72 +239,66 @@ if "history" not in st.session_state:
     st.session_state.history = []
 
 # ---------------------------------------------------------------------------
-# SIDEBAR - MOVED TO THE TOP FOR PROPER RENDERING
+# SIDEBAR
 # ---------------------------------------------------------------------------
 with st.sidebar:
-    st.markdown("### ✦ Your Profile")
+    st.markdown("### Profile")
     user_id = st.selectbox(
-        "Select Traveler",
+        "Traveler",
         sorted(users_df["user_id"].tolist()),
-        format_func=lambda uid: f"{users_df[users_df.user_id == uid]['name'].values[0]} · #{uid}"
+        format_func=lambda uid: f"{users_df[users_df.user_id == uid]['name'].values[0]}"
     )
-    st.markdown("---")
-    st.markdown("### ✦ Filter Destinations")
-    division = st.selectbox("Division", ["Any"] + sorted(dests_df["division"].unique().tolist()))
-    budget = st.selectbox("Budget Level", ["Any", "low", "medium", "high"])
-    category = st.selectbox("Category", ["Any"] + sorted(dests_df["category"].unique().tolist()))
-    st.markdown("---")
-    st.markdown("### ✦ Settings")
-    top_n = st.slider("Number of Recommendations", 3, 15, 7)
-    sort_by = st.selectbox("Sort By", ["Vibe Score", "Alphabetical", "Budget (Low to High)", "Budget (High to Low)"])
-    st.markdown("---")
-    st.markdown("### ✦ Quick Stats")
-    st.metric("Total Destinations", len(dests_df))
-    st.metric("Your Ratings", len(ratings_df[ratings_df.user_id == user_id]))
     
-    if st.session_state.favorites:
-        st.markdown("---")
-        st.markdown("### ⭐ Favorites")
-        for fav in list(st.session_state.favorites)[:3]:
-            fav_name = dests_df[dests_df.destination_id == fav]["name"].values[0] if fav in dests_df.destination_id.values else f"#{fav}"
-            st.markdown(f"- {fav_name}")
+    st.markdown("---")
+    st.markdown("### Filters")
+    division = st.selectbox("Division", ["Any"] + sorted(dests_df["division"].unique().tolist()))
+    budget = st.selectbox("Budget", ["Any", "low", "medium", "high"])
+    category = st.selectbox("Category", ["Any"] + sorted(dests_df["category"].unique().tolist()))
+    
+    st.markdown("---")
+    st.markdown("### Settings")
+    top_n = st.slider("Results", 3, 15, 7)
+    sort_by = st.selectbox("Sort", ["Vibe Score", "A-Z", "Budget ↑", "Budget ↓"])
+    
+    st.markdown("---")
+    st.markdown("### Stats")
+    st.metric("Destinations", len(dests_df))
+    st.metric("Ratings", len(ratings_df[ratings_df.user_id == user_id]))
 
 # ---------------------------------------------------------------------------
-# HERO SECTION
+# HERO
 # ---------------------------------------------------------------------------
 st.markdown(
-    '<div class="hero-title">Deshi Discovery Deck</div>'
-    '<div class="hero-sub">AI-powered travel recommendations for Bangladesh</div>',
+    '<div class="hero-title">Deshi Discovery</div>'
+    '<div class="hero-sub">AI travel recommendations for Bangladesh</div>',
     unsafe_allow_html=True,
 )
-st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
+st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
 # DISCOVER BUTTON
 # ---------------------------------------------------------------------------
-col_btn1, col_btn2, col_btn3 = st.columns([1, 2, 1])
-with col_btn2:
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
     go = st.button("✨ Discover", type="primary", use_container_width=True)
 
-st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
+st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
 # USER PROFILE
 # ---------------------------------------------------------------------------
 user_row = users_df[users_df.user_id == user_id].iloc[0]
 
-col1, col2, col3, col4 = st.columns(4)
-for col, label, val in zip(
-    [col1, col2, col3, col4],
-    ["Persona", "Home City", "Budget", "Age"],
-    [user_row["persona"], user_row["home_city"], user_row["preferred_budget"], user_row["age"]],
-):
+cols = st.columns(4)
+for col, label, val in zip(cols, ["Persona", "Home", "Budget", "Age"], 
+                          [user_row["persona"], user_row["home_city"], 
+                           user_row["preferred_budget"], user_row["age"]]):
     col.markdown(
         f'<div class="stat-box"><div class="stat-label">{label}</div><div class="stat-value">{val}</div></div>',
         unsafe_allow_html=True,
     )
 
-st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
+st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
 # RECOMMENDATIONS
@@ -374,7 +308,7 @@ if go:
     budget_arg = None if budget == "Any" else budget
     category_arg = None if category == "Any" else category
 
-    with st.spinner("Curating your perfect itinerary..."):
+    with st.spinner("Curating..."):
         recs = model.recommend(
             user_id,
             top_n=top_n * 2,
@@ -384,16 +318,16 @@ if go:
         )
 
     if recs.empty:
-        st.warning("No destinations match your filters. Try adjusting your preferences.")
+        st.warning("No matches found. Try different filters.")
     else:
-        if sort_by == "Alphabetical":
+        if sort_by == "A-Z":
             recs = recs.sort_values("name")
-        elif sort_by == "Budget (Low to High)":
+        elif sort_by == "Budget ↑":
             budget_order = {"low": 0, "medium": 1, "high": 2}
             recs["budget_rank"] = recs["budget_level"].map(budget_order)
             recs = recs.sort_values("budget_rank")
             recs = recs.drop(columns=["budget_rank"])
-        elif sort_by == "Budget (High to Low)":
+        elif sort_by == "Budget ↓":
             budget_order = {"low": 0, "medium": 1, "high": 2}
             recs["budget_rank"] = recs["budget_level"].map(budget_order)
             recs = recs.sort_values("budget_rank", ascending=False)
@@ -403,82 +337,68 @@ if go:
         
         recs = recs.head(top_n)
         
-        st.markdown(f"### ✦ Top {len(recs)} Recommendations")
-        st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
+        st.markdown(f"### Top {len(recs)} Picks")
+        st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
         cols = st.columns(2)
         for i, (_, row) in enumerate(recs.iterrows()):
             emoji = CATEGORY_EMOJI.get(row["category"], "📍")
             season_emoji = SEASON_EMOJI.get(row["best_season"], "")
-            tags = row["vibe_tags"].split("|")
+            tags = row["vibe_tags"].split("|")[:3]
             
-            chips_html = "".join(
-                f'<span class="chip{" chip-cyan" if j==0 else ""}">#{t}</span>'
-                for j, t in enumerate(tags[:3])
-            )
-
-            is_fav = row["destination_id"] in st.session_state.favorites
-            fav_icon = "⭐" if is_fav else "☆"
+            chips_html = "".join(f'<span class="chip">#{t}</span>' for t in tags)
 
             card_html = f"""
             <div class="dest-card">
                 <div class="vibe-score">{row['hybrid_score']:.1f}</div>
                 <div class="dest-name">{emoji} {row['name']} {season_emoji}</div>
-                <div class="dest-meta">{row['division'].upper()} · {row['budget_level'].upper()} BUDGET · BEST IN {row['best_season'].upper()}</div>
-                <div style="margin-bottom:0.6rem;">{chips_html}</div>
+                <div class="dest-meta">{row['division']} · {row['budget_level']} · {row['best_season']}</div>
+                <div style="margin: 0.5rem 0;">{chips_html}</div>
                 <div class="dest-desc">{row['description']}</div>
             </div>
             """
             with cols[i % 2]:
                 st.markdown(card_html, unsafe_allow_html=True)
                 
-                col_a, col_b, col_c = st.columns(3)
-                with col_a:
-                    if st.button(f"{fav_icon} Favorite", key=f"fav_{row['destination_id']}"):
+                ca, cb = st.columns(2)
+                with ca:
+                    if st.button("⭐ Favorite", key=f"fav_{row['destination_id']}"):
                         if row["destination_id"] in st.session_state.favorites:
                             st.session_state.favorites.remove(row["destination_id"])
                         else:
                             st.session_state.favorites.add(row["destination_id"])
                         st.rerun()
-                with col_b:
-                    if st.button("📍 Map", key=f"map_{row['destination_id']}"):
-                        st.info(f"📍 {row['name']}: {row['latitude']}, {row['longitude']}")
-                with col_c:
-                    if st.button("📋 Details", key=f"details_{row['destination_id']}"):
-                        with st.expander("📖 More Info", expanded=True):
-                            st.markdown(f"**Category:** {row['category']}")
-                            st.markdown(f"**Budget:** {row['budget_level']}")
-                            st.markdown(f"**Best Season:** {row['best_season']}")
-                            st.markdown(f"**Avg Cost:** {row['avg_cost_bdt_per_day']} BDT/day")
-                            st.markdown(f"**Instagrammability:** {'⭐' * int(row['instagrammability'])}")
-                
-                if row["destination_id"] not in st.session_state.history:
-                    st.session_state.history.append(row["destination_id"])
+                with cb:
+                    if st.button("ℹ️ Details", key=f"details_{row['destination_id']}"):
+                        with st.expander("More Info"):
+                            st.write(f"**Category:** {row['category']}")
+                            st.write(f"**Budget:** {row['budget_level']}")
+                            st.write(f"**Best Season:** {row['best_season']}")
+                            st.write(f"**Cost:** {row['avg_cost_bdt_per_day']} BDT/day")
+                            st.write(f"**Instagram:** {'⭐' * int(row['instagrammability'])}")
 
 else:
-    st.info(
-        "👈 Set your preferences in the sidebar and click **Discover** to find your next adventure in Bangladesh."
-    )
+    st.info("👈 Set preferences in the sidebar and click **Discover**")
 
 # ---------------------------------------------------------------------------
-# FEELING LUCKY
+# RANDOM PICK
 # ---------------------------------------------------------------------------
-st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
-col_r1, col_r2 = st.columns([3, 1])
-with col_r1:
-    st.markdown("### 🎲 Feeling Lucky?")
-with col_r2:
-    if st.button("🎲 Surprise Me!", use_container_width=True):
+st.markdown('<hr class="divider">', unsafe_allow_html=True)
+col1, col2 = st.columns([3, 1])
+with col1:
+    st.markdown("### 🎲 Random Pick")
+with col2:
+    if st.button("🎲 Surprise", use_container_width=True):
         random_dest = dests_df.sample(1).iloc[0]
-        st.success(f"✨ Check out **{random_dest['name']}** in {random_dest['division']}!")
-        st.markdown(f"> {random_dest['description']}")
+        st.success(f"Try **{random_dest['name']}** in {random_dest['division']}!")
+        st.caption(random_dest['description'])
 
 # ---------------------------------------------------------------------------
 # RECENTLY VIEWED
 # ---------------------------------------------------------------------------
 if st.session_state.history:
-    st.markdown('<hr class="blue-divider">', unsafe_allow_html=True)
-    st.markdown("### 🕐 Recently Viewed")
+    st.markdown('<hr class="divider">', unsafe_allow_html=True)
+    st.markdown("### 🕐 Recent")
     recent_cols = st.columns(min(4, len(st.session_state.history)))
     for idx, dest_id in enumerate(list(st.session_state.history)[-4:]):
         if dest_id in dests_df.destination_id.values:
