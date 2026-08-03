@@ -476,7 +476,7 @@ with col2:
 if st.session_state.history:
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">🕐 Recently Viewed</div>', unsafe_allow_html=True)
-    st.markdown('<p class="info-text" style="margin-top: 0;">Quick access to destinations you've explored</p>', unsafe_allow_html=True)
+    st.markdown("<p class='info-text' style='margin-top: 0;'>Quick access to destinations you've explored</p>", unsafe_allow_html=True)
     
     recent_cols = st.columns(min(4, len(st.session_state.history)))
     for idx, dest_id in enumerate(list(st.session_state.history)[-4:]):
