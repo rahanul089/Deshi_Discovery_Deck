@@ -56,12 +56,27 @@ CSS = """
     z-index: 1;
 }
 
+/* Sidebar styles */
 section[data-testid="stSidebar"] {
     background: rgba(10, 10, 15, 0.98) !important;
     border-right: 1px solid var(--border) !important;
 }
 section[data-testid="stSidebar"] * {
     color: var(--text) !important;
+}
+
+/* Make sidebar toggle visible */
+button[kind="header"] {
+    color: var(--primary) !important;
+    background: transparent !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    margin: 4px !important;
+}
+button[kind="header"]:hover {
+    border-color: var(--primary) !important;
+    background: rgba(0, 212, 255, 0.05) !important;
 }
 
 .hero-title {
@@ -176,8 +191,14 @@ section[data-testid="stSidebar"] * {
     color: var(--text);
 }
 
-footer, #MainMenu, header {
-    display: none !important;
+/* Keep footer visible but clean */
+footer {
+    opacity: 0.3 !important;
+    font-size: 0.7rem !important;
+}
+
+#MainMenu {
+    visibility: hidden;
 }
 
 .stSelectbox > div > div {
@@ -200,6 +221,20 @@ footer, #MainMenu, header {
     background: var(--bg-card) !important;
     border: 1px solid var(--border) !important;
     color: var(--text) !important;
+}
+
+.info-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin: 1rem 0;
+}
+
+.section-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin: 1.5rem 0 0.5rem 0;
 }
 </style>
 """
@@ -242,7 +277,9 @@ if "history" not in st.session_state:
 # SIDEBAR
 # ---------------------------------------------------------------------------
 with st.sidebar:
-    st.markdown("### Profile")
+    st.markdown("### 👤 Profile")
+    st.markdown('<p style="color: var(--text-secondary); font-size: 0.8rem;">Select your traveler profile to get personalized recommendations</p>', unsafe_allow_html=True)
+    
     user_id = st.selectbox(
         "Traveler",
         sorted(users_df["user_id"].tolist()),
@@ -250,43 +287,66 @@ with st.sidebar:
     )
     
     st.markdown("---")
-    st.markdown("### Filters")
+    st.markdown("### 🎯 Filters")
+    st.markdown('<p style="color: var(--text-secondary); font-size: 0.8rem;">Narrow down destinations by region, budget, and category</p>', unsafe_allow_html=True)
+    
     division = st.selectbox("Division", ["Any"] + sorted(dests_df["division"].unique().tolist()))
     budget = st.selectbox("Budget", ["Any", "low", "medium", "high"])
     category = st.selectbox("Category", ["Any"] + sorted(dests_df["category"].unique().tolist()))
     
     st.markdown("---")
-    st.markdown("### Settings")
+    st.markdown("### ⚙️ Settings")
     top_n = st.slider("Results", 3, 15, 7)
     sort_by = st.selectbox("Sort", ["Vibe Score", "A-Z", "Budget ↑", "Budget ↓"])
     
     st.markdown("---")
-    st.markdown("### Stats")
+    st.markdown("### 📊 Stats")
     st.metric("Destinations", len(dests_df))
-    st.metric("Ratings", len(ratings_df[ratings_df.user_id == user_id]))
+    st.metric("Your Ratings", len(ratings_df[ratings_df.user_id == user_id]))
 
 # ---------------------------------------------------------------------------
-# HERO
+# HERO SECTION WITH PARAGRAPH
 # ---------------------------------------------------------------------------
 st.markdown(
     '<div class="hero-title">Deshi Discovery</div>'
-    '<div class="hero-sub">AI travel recommendations for Bangladesh</div>',
+    '<div class="hero-sub">AI-powered travel recommendations for Bangladesh</div>',
     unsafe_allow_html=True,
 )
+
+st.markdown("""
+<div class="info-text">
+    Discover the hidden gems of Bangladesh with our AI-powered recommendation engine. 
+    Whether you're a nature lover, history enthusiast, or adventure seeker, we'll help 
+    you find the perfect destination tailored to your preferences.
+</div>
+""", unsafe_allow_html=True)
+
 st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
-# DISCOVER BUTTON
+# DISCOVER BUTTON WITH DESCRIPTION
 # ---------------------------------------------------------------------------
+st.markdown("""
+<div class="section-title">Start Your Journey</div>
+<div class="info-text">
+    Configure your preferences in the sidebar and click below to get personalized 
+    recommendations. Our algorithm considers your travel style, budget, and interests 
+    to curate the best destinations for you.
+</div>
+""", unsafe_allow_html=True)
+
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    go = st.button("✨ Discover", type="primary", use_container_width=True)
+    go = st.button("✨ Discover My Next Adventure", type="primary", use_container_width=True)
 
 st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
 # USER PROFILE
 # ---------------------------------------------------------------------------
+st.markdown('<div class="section-title">👤 Your Travel Profile</div>', unsafe_allow_html=True)
+st.markdown('<p class="info-text" style="margin-top: 0;">Based on your selected traveler profile</p>', unsafe_allow_html=True)
+
 user_row = users_df[users_df.user_id == user_id].iloc[0]
 
 cols = st.columns(4)
@@ -308,7 +368,7 @@ if go:
     budget_arg = None if budget == "Any" else budget
     category_arg = None if category == "Any" else category
 
-    with st.spinner("Curating..."):
+    with st.spinner("Curating personalized recommendations..."):
         recs = model.recommend(
             user_id,
             top_n=top_n * 2,
@@ -318,7 +378,7 @@ if go:
         )
 
     if recs.empty:
-        st.warning("No matches found. Try different filters.")
+        st.warning("No matches found. Try adjusting your filters in the sidebar.")
     else:
         if sort_by == "A-Z":
             recs = recs.sort_values("name")
@@ -337,7 +397,8 @@ if go:
         
         recs = recs.head(top_n)
         
-        st.markdown(f"### Top {len(recs)} Picks")
+        st.markdown(f'<div class="section-title">✨ Top {len(recs)} Destinations For You</div>', unsafe_allow_html=True)
+        st.markdown(f'<p class="info-text" style="margin-top: 0;">Based on your preferences, here are the best destinations for your next trip</p>', unsafe_allow_html=True)
         st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
         cols = st.columns(2)
@@ -376,21 +437,37 @@ if go:
                             st.write(f"**Best Season:** {row['best_season']}")
                             st.write(f"**Cost:** {row['avg_cost_bdt_per_day']} BDT/day")
                             st.write(f"**Instagram:** {'⭐' * int(row['instagrammability'])}")
+                        
+                if row["destination_id"] not in st.session_state.history:
+                    st.session_state.history.append(row["destination_id"])
 
 else:
-    st.info("👈 Set preferences in the sidebar and click **Discover**")
+    st.markdown("""
+    <div class="info-text" style="text-align: center; padding: 2rem 0;">
+        👈 Set your preferences in the sidebar and click <strong>Discover My Next Adventure</strong> 
+        to find your perfect destination in Bangladesh.
+    </div>
+    """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
-# RANDOM PICK
+# RANDOM PICK WITH DESCRIPTION
 # ---------------------------------------------------------------------------
 st.markdown('<hr class="divider">', unsafe_allow_html=True)
+st.markdown('<div class="section-title">🎲 Feeling Adventurous?</div>', unsafe_allow_html=True)
+st.markdown("""
+<div class="info-text">
+    Can't decide? Let us surprise you with a random destination from our collection. 
+    Who knows, you might discover your new favorite spot!
+</div>
+""", unsafe_allow_html=True)
+
 col1, col2 = st.columns([3, 1])
 with col1:
-    st.markdown("### 🎲 Random Pick")
+    pass
 with col2:
-    if st.button("🎲 Surprise", use_container_width=True):
+    if st.button("🎲 Surprise Me", use_container_width=True):
         random_dest = dests_df.sample(1).iloc[0]
-        st.success(f"Try **{random_dest['name']}** in {random_dest['division']}!")
+        st.success(f"✨ Try **{random_dest['name']}** in {random_dest['division']}!")
         st.caption(random_dest['description'])
 
 # ---------------------------------------------------------------------------
@@ -398,7 +475,9 @@ with col2:
 # ---------------------------------------------------------------------------
 if st.session_state.history:
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
-    st.markdown("### 🕐 Recent")
+    st.markdown('<div class="section-title">🕐 Recently Viewed</div>', unsafe_allow_html=True)
+    st.markdown('<p class="info-text" style="margin-top: 0;">Quick access to destinations you've explored</p>', unsafe_allow_html=True)
+    
     recent_cols = st.columns(min(4, len(st.session_state.history)))
     for idx, dest_id in enumerate(list(st.session_state.history)[-4:]):
         if dest_id in dests_df.destination_id.values:
